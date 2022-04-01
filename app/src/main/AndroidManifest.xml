@@ -20,10 +20,14 @@
         android:theme="@style/Theme.FytaCodeTest">
         <activity
             android:name=".activities.results.ResultsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:exported="false">
         </activity>
         <activity
             android:name=".activities.main.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

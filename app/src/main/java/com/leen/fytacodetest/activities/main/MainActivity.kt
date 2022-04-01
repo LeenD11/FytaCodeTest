@@ -86,7 +86,10 @@ class MainActivity : AppCompatActivity() {
                         toast.show()
                     }
                 }
+                //this code duplication should be handled!
                 viewBinding.progressBar.visibility = View.INVISIBLE
+                viewBinding.btnCaptureImg.isEnabled = true
+                viewBinding.btnImportImg.isEnabled = true
             } catch (exception: Exception) {
                 throw exception
             }
@@ -100,6 +103,8 @@ class MainActivity : AppCompatActivity() {
             val uri = data!!.data
             val requestBody = identifyPlantUseCase.buildRequestBody(this, uri!!)
             viewBinding.progressBar.visibility = View.VISIBLE
+            viewBinding.btnCaptureImg.isEnabled = false
+            viewBinding.btnImportImg.isEnabled = false
             identifyPlant(requestBody)
         }
     }
@@ -114,6 +119,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun takePhoto() {
         viewBinding.progressBar.visibility = View.VISIBLE
+        viewBinding.btnCaptureImg.isEnabled = false
+        viewBinding.btnImportImg.isEnabled = false
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
 

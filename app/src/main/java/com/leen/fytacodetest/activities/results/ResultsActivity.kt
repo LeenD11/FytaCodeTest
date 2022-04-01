@@ -1,16 +1,12 @@
 package com.leen.fytacodetest.activities.results
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leen.fytacodetest.R
 import com.leen.fytacodetest.databinding.ActivityResultsBinding
 import com.leen.fytacodetest.networking.resultdataclasses.Result
 import com.leen.fytacodetest.utils.Constants
-import kotlinx.coroutines.NonDisposableHandle
 
 class ResultsActivity : AppCompatActivity() {
 
@@ -28,6 +24,7 @@ class ResultsActivity : AppCompatActivity() {
         results = intent.getSerializableExtra(Constants.INTENT_KEY) as ArrayList<Result>
 
         viewBinding.btnBack.setOnClickListener { onBackPressed() }
+        viewBinding.btnRetakePhoto.setOnClickListener { onBackPressed() }
 
         //init the adapter for results
         resultsAdapter = ResultsAdapter(this, results)

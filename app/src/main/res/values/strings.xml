@@ -8,4 +8,5 @@
     <string name="retake_picture_msg">Retake the photo or send us the picture \nso that we can help you find it.</string>
     <string name="retake_photo">Retake Photo</string>
     <string name="image_result">image result</string>
+    <string name="result_image">Result Image</string>
 </resources>

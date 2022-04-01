@@ -1,9 +1,8 @@
 package com.leen.fytacodetest.networking.resultdataclasses
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Plant(
+data class ApiResponse(
     val bestMatch: String? = null,
     val language: String? = null,
     val preferedReferential: String? = null,

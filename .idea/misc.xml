@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/button_background.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable-v24/dialog_background.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable-v24/score_background.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.207" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_capture.xml" value="0.2255" />
         <entry key="app/src/main/res/drawable/ic_cature_image.xml" value="0.2255" />
@@ -13,8 +15,10 @@
         <entry key="app/src/main/res/drawable/ic_insert_photo.xml" value="0.2255" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
         <entry key="app/src/main/res/font/avenir_next.xml" value="0.2994791666666667" />
+        <entry key="app/src/main/res/layout-v31/dialog_image.xml" value="0.1953125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_results.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_result.xml" value="0.33" />
       </map>
     </option>

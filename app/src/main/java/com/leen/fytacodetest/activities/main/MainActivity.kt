@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,16 +18,14 @@ import androidx.core.content.ContextCompat
 import com.leen.fytacodetest.MyApplication
 import com.leen.fytacodetest.activities.results.ResultsActivity
 import com.leen.fytacodetest.databinding.ActivityMainBinding
-import com.leen.fytacodetest.networking.resultdataclasses.Plant
+import com.leen.fytacodetest.networking.resultdataclasses.ApiResponse
 import com.leen.fytacodetest.networking.resultdataclasses.Result
 import com.leen.fytacodetest.utils.Constants
 import com.leen.fytacodetest.utils.FileUtil
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
-import java.io.Serializable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageCapture: ImageCapture
     private lateinit var identifyPlantUseCase: IdentifyPlantUseCase
     private lateinit var fileUtil: FileUtil
-    private lateinit var plant: Plant
+    private lateinit var apiResponse: ApiResponse
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -63,30 +62,38 @@ class MainActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
         fileUtil = FileUtil()
-        plant= Plant()
+        apiResponse = ApiResponse()
 
     }
 
+    //this functions calls the api request function from the use case
     private fun identifyPlant(images: RequestBody) {
         coroutineScope.launch {
             try {
                 val result = identifyPlantUseCase.identifyPlant(images)
                 when (result) {
                     is IdentifyPlantUseCase.Result.Success -> {
+                        //in case of result success, move to next page and pass results.
                         val intent = Intent(this@MainActivity, ResultsActivity::class.java).apply {
-                            putExtra(Constants.INTENT_KEY, result.plant.results as ArrayList<Result>)
+                            putExtra(Constants.INTENT_KEY, result.apiResponse.results as ArrayList<Result>)
                         }
-                        viewBinding.progressBar.visibility = View.INVISIBLE
                         startActivity(intent)
                     }
-                    is IdentifyPlantUseCase.Result.Failure -> Log.d(TAG, "identifyPlant: ${result.error}")
+                    is IdentifyPlantUseCase.Result.Failure -> {
+                        //show toast with error message
+                        val toast = Toast.makeText(this@MainActivity, result.error, Toast.LENGTH_LONG)
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                    }
                 }
+                viewBinding.progressBar.visibility = View.INVISIBLE
             } catch (exception: Exception) {
                 throw exception
             }
         }
     }
 
+    //import image from gallery and make api request to identify plant
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
@@ -97,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //open gallery and select image
     private fun openGallery() {
         val intent = Intent()
         intent.type = Constants.IMAGE_FILE_TYPE
@@ -147,8 +155,10 @@ class MainActivity : AppCompatActivity() {
             // Select back camera as a default view
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-            try { // Unbind use cases before rebinding
-                cameraProvider.unbindAll() // Bind use cases to camera
+            try {
+                // Unbind use cases before rebinding
+                cameraProvider.unbindAll()
+                // Bind use cases to camera
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
 
             } catch (exc: Exception) {
@@ -180,7 +190,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        cameraExecutor.shutdown()
         coroutineScope.coroutineContext.cancelChildren()
     }
 

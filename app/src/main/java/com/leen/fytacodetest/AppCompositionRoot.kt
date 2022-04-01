@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @UiThread
 class AppCompositionRoot  {
 
+    //init retrofit by lazy so it will not be initialized everytime we make an api call
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)

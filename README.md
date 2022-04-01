@@ -5,6 +5,8 @@ image to plant.net API and display a list containing the results to the user.
 
 ## Technologies Used: 
 Kotlin
+Retrofit
+Glide
 
 ## API Used:
 plant.net API

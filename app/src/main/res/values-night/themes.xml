@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.FytaCodeTest" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.FytaCodeTest" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black_500</item>
         <item name="colorPrimaryVariant">@color/black_500</item>
@@ -17,8 +17,10 @@
         <item name="fontFamily">@font/avenir_next_regular</item>
         <item name="android:fontFamily">@font/avenir_next_regular</item>
         <item name="android:textAppearance">@style/whiteTitleStyle</item>
+        <item name= "android:textColor">@color/black</item>
+        <item name="android:lineHeight">20dp</item>
+        <item name="android:textFontWeight">400</item>
     </style>
-
 
     <style name="whiteTitleStyle">
         <item name="android:textColor">@color/white</item>
@@ -26,5 +28,13 @@
         <item name="android:textFontWeight">600</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="blackTitleStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 
 </resources>

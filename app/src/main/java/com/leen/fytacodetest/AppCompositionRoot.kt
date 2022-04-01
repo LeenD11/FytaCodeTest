@@ -1,6 +1,7 @@
 package com.leen.fytacodetest
 
 import androidx.annotation.UiThread
+import com.leen.fytacodetest.activities.main.IdentifyPlantUseCase
 import com.leen.fytacodetest.networking.PlantApi
 import com.leen.fytacodetest.utils.Constants
 import retrofit2.Retrofit

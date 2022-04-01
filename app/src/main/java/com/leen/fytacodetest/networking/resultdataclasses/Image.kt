@@ -1,5 +1,7 @@
 package com.leen.fytacodetest.networking.resultdataclasses
 
+import java.io.Serializable
+
 data class Image(
     val author: String,
     val citation: String,
@@ -7,4 +9,4 @@ data class Image(
     val license: String,
     val organ: String,
     val url: Url
-)
+): Serializable

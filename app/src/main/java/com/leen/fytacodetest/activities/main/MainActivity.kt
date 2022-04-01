@@ -1,4 +1,4 @@
-package com.leen.fytacodetest
+package com.leen.fytacodetest.activities.main
 
 import android.Manifest
 import android.app.Activity
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,16 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.leen.fytacodetest.MyApplication
+import com.leen.fytacodetest.activities.results.ResultsActivity
 import com.leen.fytacodetest.databinding.ActivityMainBinding
+import com.leen.fytacodetest.networking.resultdataclasses.Plant
+import com.leen.fytacodetest.networking.resultdataclasses.Result
 import com.leen.fytacodetest.utils.Constants
 import com.leen.fytacodetest.utils.FileUtil
 import kotlinx.coroutines.*
 import okhttp3.RequestBody
+import java.io.Serializable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -28,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var imageCapture: ImageCapture
     private lateinit var identifyPlantUseCase: IdentifyPlantUseCase
     private lateinit var fileUtil: FileUtil
+    private lateinit var plant: Plant
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -56,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
         fileUtil = FileUtil()
+        plant= Plant()
 
     }
 
@@ -65,7 +73,11 @@ class MainActivity : AppCompatActivity() {
                 val result = identifyPlantUseCase.identifyPlant(images)
                 when (result) {
                     is IdentifyPlantUseCase.Result.Success -> {
-                        Log.d(TAG, "identifyPlant: ${result.plant}")
+                        val intent = Intent(this@MainActivity, ResultsActivity::class.java).apply {
+                            putExtra(Constants.INTENT_KEY, result.plant.results as ArrayList<Result>)
+                        }
+                        viewBinding.progressBar.visibility = View.INVISIBLE
+                        startActivity(intent)
                     }
                     is IdentifyPlantUseCase.Result.Failure -> Log.d(TAG, "identifyPlant: ${result.error}")
                 }
@@ -80,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             val data: Intent? = result.data
             val uri = data!!.data
             val requestBody = identifyPlantUseCase.buildRequestBody(this, uri!!)
+            viewBinding.progressBar.visibility = View.VISIBLE
             identifyPlant(requestBody)
         }
     }
@@ -92,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun takePhoto() {
-
+        viewBinding.progressBar.visibility = View.VISIBLE
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
 
@@ -167,6 +180,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        cameraExecutor.shutdown()
         coroutineScope.coroutineContext.cancelChildren()
     }
 
@@ -175,9 +189,9 @@ class MainActivity : AppCompatActivity() {
         cameraExecutor.shutdown()
     }
 
+
     companion object {
-        private const val TAG = "FytaTestApp"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val TAG = "MainActivity"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf(
             Manifest.permission.CAMERA,

@@ -9,4 +9,6 @@
     <color name="black_500">#80000000</color>
     <color name="black_600">#99000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="washed_black">#313133</color>
+    <color name="newbie_green">#A2EFAB</color>
 </resources>

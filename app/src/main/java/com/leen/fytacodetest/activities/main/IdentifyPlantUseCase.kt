@@ -1,4 +1,4 @@
-package com.leen.fytacodetest
+package com.leen.fytacodetest.activities.main
 
 import android.content.Context
 import android.net.Uri

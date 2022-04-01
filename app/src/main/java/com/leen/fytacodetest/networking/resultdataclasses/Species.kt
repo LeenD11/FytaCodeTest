@@ -1,5 +1,7 @@
 package com.leen.fytacodetest.networking.resultdataclasses
 
+import java.io.Serializable
+
 data class Species(
     val commonNames: List<String>,
     val family: Family,
@@ -7,4 +9,4 @@ data class Species(
     val scientificName: String,
     val scientificNameAuthorship: String,
     val scientificNameWithoutAuthor: String
-)
+): Serializable

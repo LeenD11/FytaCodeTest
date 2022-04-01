@@ -1,5 +1,11 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">FytaCodeTest</string>
     <string name="capture_image">Capture Image</string>
     <string name="photo_identification">Photo Identification</string>
+    <string name="results">Results</string>
+    <string name="arrow_back">arrow_back</string>
+    <string name="retake_picture_title">We didn’t find your plant?</string>
+    <string name="retake_picture_msg">Retake the photo or send us the picture \nso that we can help you find it.</string>
+    <string name="retake_photo">Retake Photo</string>
+    <string name="image_result">image result</string>
 </resources>
